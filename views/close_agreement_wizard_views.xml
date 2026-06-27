@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_close_agreement_wizard_form" model="ir.ui.view">
+        <field name="name">close.agreement.wizard.form</field>
+        <field name="model">close.agreement.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Close Agreement">
+                <group>
+                    <field name="sale_order_id" readonly="1" />
+                    <field
+                        name="reason"
+                        placeholder="Enter the required closure reason..."
+                    />
+                </group>
+                <footer>
+                    <button
+                        name="action_confirm"
+                        string="Confirm"
+                        type="object"
+                        class="btn-primary"
+                    />
+                    <button
+                        string="Cancel"
+                        class="btn-secondary"
+                        special="cancel"
+                    />
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<templates>
+    <t
+        t-name="autoinfo_sale_order_invoice_amount.TaxTotalsCleanup"
+        t-inherit="account.TaxTotalsField"
+        t-inherit-mode="extension"
+    >
+        <xpath
+            expr="//table[.//label[contains(normalize-space(.), 'Invoiced Amount')]]"
+            position="replace"
+        />
+    </t>
+</templates>
+

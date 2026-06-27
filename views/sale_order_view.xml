@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_order_form_collection_buttons" model="ir.ui.view">
+        <field name="name">sale.order.form.autoinfo.collection.buttons</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//sheet" position="inside">
+                <field name="is_closed_agreement" invisible="1" />
+            </xpath>
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button
+                    name="action_open_collections_page"
+                    type="object"
+                    class="oe_stat_button"
+                    icon="fa-money"
+                >
+                    <field
+                        name="collection_summary_display"
+                        string="Collections"
+                        widget="statinfo"
+                    />
+                </button>
+            </xpath>
+            <xpath expr="//header" position="inside">
+                <button
+                    name="action_open_close_agreement_wizard"
+                    string="Close Agreement"
+                    type="object"
+                    class="btn-secondary"
+                    groups="sales_team.group_sale_salesman,sales_team.group_sale_manager"
+                    attrs="{'invisible': [('is_closed_agreement', '=', True)]}"
+                />
+                <button
+                    name="action_reopen_agreement"
+                    string="Reopen Agreement"
+                    type="object"
+                    class="btn-secondary"
+                    groups="sales_team.group_sale_manager"
+                    attrs="{'invisible': [('is_closed_agreement', '=', False)]}"
+                />
+            </xpath>
+            <xpath expr="//group[@name='sale_header']" position="after">
+                <group attrs="{'invisible': [('is_closed_agreement', '=', False)]}">
+                    <group string="Closed Agreement">
+                        <field name="collection_status" widget="badge" readonly="1" />
+                        <field name="closed_agreement_reason" readonly="1" />
+                        <field name="closed_agreement_date" readonly="1" />
+                        <field name="closed_agreement_by" readonly="1" />
+                    </group>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_order_form_collections" model="ir.ui.view">
+        <field name="name">sale.order.form.autoinfo.collections</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form" />
+        <field name="mode">primary</field>
+        <field eval="90" name="priority" />
+        <field name="arch" type="xml">
+            <xpath expr="//sheet" position="inside">
+                <field name="is_closed_agreement" invisible="1" />
+            </xpath>
+            <xpath expr="//page[@name='order_lines']" position="before">
+                <page string="Collections">
+                    <group col="4">
+                        <field name="name" readonly="1" />
+                        <field name="partner_id" readonly="1" />
+                        <field name="amount_total" readonly="1" />
+                        <field name="collection_status" widget="badge" readonly="1" />
+                        <field
+                            name="total_invoice_amount"
+                            readonly="1"
+                            widget="monetary"
+                            options="{'currency_field': 'currency_id'}"
+                        />
+                        <field
+                            name="total_paid_amount"
+                            readonly="1"
+                            widget="monetary"
+                            options="{'currency_field': 'currency_id'}"
+                        />
+                        <field
+                            name="outstanding_amount"
+                            readonly="1"
+                            widget="monetary"
+                            options="{'currency_field': 'currency_id'}"
+                        />
+                        <field name="collection_percent" widget="percentage" readonly="1" />
+                    </group>
+                    <group attrs="{'invisible': [('is_closed_agreement', '=', False)]}">
+                        <group string="Closed Agreement">
+                            <field name="closed_agreement_reason" readonly="1" />
+                            <field name="closed_agreement_date" readonly="1" />
+                            <field name="closed_agreement_by" readonly="1" />
+                        </group>
+                    </group>
+                    <field
+                        name="invoice_ids"
+                        readonly="1"
+                        domain="[('move_type', 'in', ('out_invoice', 'out_refund')), ('state', '!=', 'cancel')]"
+                        context="{'default_move_type': 'out_invoice'}"
+                    >
+                        <tree create="0" delete="0" edit="0">
+                            <field name="name" string="Invoice Number" />
+                            <field name="state" invisible="1" />
+                            <field name="invoice_date" />
+                            <field name="amount_total" />
+                            <field name="amount_residual" />
+                            <field name="collection_payment_status" widget="badge" />
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_order_tree_collection_status" model="ir.ui.view">
+        <field name="name">sale.order.tree.autoinfo.collection.status</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_quotation_tree_with_onboarding" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='amount_total']" position="after">
+                <field name="total_paid_amount" optional="hide" />
+                <field name="outstanding_amount" optional="hide" />
+                <field name="collection_status" widget="badge" optional="show" />
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_sale_order_tree_collection_status" model="ir.ui.view">
+        <field name="name">sale.order.tree.autoinfo.collection.status.sale</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_tree" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='amount_total']" position="after">
+                <field name="total_paid_amount" optional="hide" />
+                <field name="outstanding_amount" optional="hide" />
+                <field name="collection_status" widget="badge" optional="show" />
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_sales_order_filter_collection_status" model="ir.ui.view">
+        <field name="name">sale.order.search.autoinfo.collection.status</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_sales_order_filter" />
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='my_sale_orders_filter']" position="after">
+                <filter
+                    name="partial_collection"
+                    string="Partial Collection"
+                    domain="[('collection_status', '=', 'partial')]"
+                />
+                <filter
+                    name="paid_collection"
+                    string="Fully Collected"
+                    domain="[('collection_status', '=', 'paid')]"
+                />
+                <filter
+                    name="closed_agreement"
+                    string="Closed Agreement"
+                    domain="[('collection_status', '=', 'closed_agreement')]"
+                />
+            </xpath>
+            <xpath expr="//group[@expand='0']" position="inside">
+                <filter
+                    name="group_by_collection_status"
+                    string="Collection Status"
+                    context="{'group_by': 'collection_status'}"
+                />
+            </xpath>
+        </field>
+    </record>
+</odoo>

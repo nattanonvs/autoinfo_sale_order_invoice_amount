@@ -1,0 +1,108 @@
+# คู่มือเทคนิค
+
+## โมดูลนี้ทำอะไร
+
+โมดูลนี้เป็นโมดูลเสริม
+
+โมดูลนี้ต่อจากโมดูลเดิมชื่อ `sale_order_invoice_amount`
+
+โมดูลนี้เพิ่มเรื่อง
+
+- หน้า `Collections`
+- สถานะการเก็บเงิน
+- ปุ่ม `Close Agreement`
+- ปุ่ม `Reopen Agreement`
+
+## ติดตั้ง
+
+1. วางโฟลเดอร์โมดูลไว้ที่
+   `/var/odoo/custom15_autoinfo/autoinfo_sale_order_invoice_amount`
+2. ตรวจว่า path นี้อยู่ใน `addons_path`
+3. รีสตาร์ต Odoo
+4. ไปที่ `Apps`
+5. กด `Update Apps List`
+6. ค้นหา `AutoInfo Sale Order Invoice Amount`
+7. กด `Install`
+
+## อัปเดตเวอร์ชัน
+
+1. คัดลอกไฟล์ใหม่ทับไฟล์เดิม
+2. รีสตาร์ต Odoo
+3. อัปเกรดโมดูล
+
+ตัวอย่างคำสั่ง
+
+1. เปิด terminal
+2. รันคำสั่งอัปเกรดโมดูล
+
+```bash
+./odoo-bin -c /etc/odoo/odoo.conf -d <database_name> -u autoinfo_sale_order_invoice_amount --stop-after-init
+```
+
+## ถอนการติดตั้ง
+
+1. ไปที่ `Apps`
+2. ค้นหาโมดูลนี้
+3. กด `Uninstall`
+
+หลังจากถอน
+
+- field และ view ของโมดูลนี้จะถูกเอาออกจาก registry
+- โมดูลหลักของ Odoo จะไม่ถูกลบ
+
+## โครงสร้างหลัก
+
+- `__manifest__.py` เก็บข้อมูลโมดูล
+- `models/` เก็บ logic ฝั่ง Python
+- `wizard/` เก็บหน้าต่างป๊อปอัปปิดข้อตกลง
+- `views/` เก็บ form, tree, search และ wizard view
+- `security/` เก็บสิทธิ์การใช้ wizard
+- `docs/` เก็บเอกสาร
+
+## ไฟล์สำคัญ
+
+- `models/sale_order.py`
+- `models/account_move.py`
+- `wizard/close_agreement_wizard.py`
+- `views/sale_order_view.xml`
+- `views/close_agreement_wizard_views.xml`
+- `security/ir.model.access.csv`
+
+## Dependency
+
+โมดูลนี้ใช้ dependency หลักดังนี้
+
+- `sale_order_invoice_amount`
+- `sale_margin`
+- `account`
+
+## หมายเหตุทางเทคนิค
+
+- ยอดเก็บเงินคำนวณจาก invoice ที่เชื่อมกับ sale order
+- invoice ที่ถูกยกเลิกจะไม่ถูกนำมาคิด
+- ถ้า currency ของเอกสารยังไม่พร้อม ระบบจะใช้ fallback currency ที่ปลอดภัย
+- tree ย่อยของ invoice มี field `state` แบบซ่อน เพื่อให้ modifier ของ Odoo ทำงานถูกต้อง
+- `Close Agreement` จะตรวจสิทธิ์ผู้ใช้ก่อนทุกครั้ง
+- `Reopen Agreement` ใช้ได้เฉพาะ `Sales Manager`
+
+## การทดสอบที่ควรทำหลังติดตั้ง
+
+1. เปิดหน้า `Quotation`
+2. เปิดหน้า `Sales Order`
+3. เปิดหน้า `Collections`
+4. ลองกด `Close Agreement`
+5. ลองกด `Reopen Agreement` ด้วย `Sales Manager`
+6. ดูคอลัมน์ในหน้า list
+
+## ถ้าจะย้ายขึ้น Git
+
+1. ตรวจ version ใน `__manifest__.py`
+2. ตรวจ changelog
+3. สร้าง zip backup
+4. ตรวจชื่อ repo ให้ตรงกับชื่อโมดูล
+
+## Credits
+
+Development Team: The Auto-Info Co., Ltd. : Dev Team / Mr. Nattanon Vinyangkoon – Project conception, implementation, and thorough review of all deliverables.
+
+AI Coding Assistant: TRAE SOLO / MICROSOFT 365 COPILOT - Utilized to support code generation and productivity improvements under human oversight.

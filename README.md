@@ -1,0 +1,66 @@
+# AutoInfo Sale Order Invoice Amount (Odoo 15)
+
+โมดูลนี้เป็นโมดูลเสริมของ `sale_order_invoice_amount` (OCA)
+
+โมดูลนี้ช่วยดูยอดวางบิล ยอดรับชำระ และสถานะการเก็บเงินบนเอกสารขาย
+
+## ขอบเขต
+
+- ใช้กับ `Quotation`
+- ใช้กับ `Sales Order`
+- ใช้กับ invoice ที่เชื่อมกับเอกสารขาย
+
+## คุณสมบัติ
+
+- เพิ่มฟิลด์ใหม่บน `sale.order`
+  - Invoiced Untaxed Amount
+  - Uninvoiced Untaxed Amount
+  - Invoiced Amount (%)
+- แสดงค่าบน Sale Order Form และ Tree view
+- เพิ่ม Smart Button `Collections` บน Sale Order เพื่อเปิดหน้าสรุปการเก็บเงินและรายการ Invoice ที่เกี่ยวข้อง
+- เพิ่ม `Collection Status` สำหรับติดตามสถานะ `Partial Collection`, `Fully Collected`, และ `Closed Agreement`
+- แสดง `Collection Status` ได้ทั้งบนหน้า Form, Tree view และ Search filters
+- รองรับ workflow `Close Agreement` โดยบังคับกรอกเหตุผลก่อนยืนยัน และบันทึกข้อมูล audit trail
+- รองรับ `Reopen Agreement` โดยจำกัดสิทธิ์ไว้สำหรับ `Sales Manager`
+- แยกติดตั้ง/ถอนการติดตั้งได้ โดยไม่กระทบโมดูลหลักของ Odoo (มีผลเฉพาะการเพิ่ม field และ view ของโมดูลนี้)
+
+## Dependency
+
+- `sale_order_invoice_amount`
+- `sale_margin`
+- `account`
+
+## ติดตั้งแบบย่อ
+
+1. วางโฟลเดอร์โมดูลไว้ที่ `/var/odoo/custom15_autoinfo/autoinfo_sale_order_invoice_amount`
+2. ตรวจว่า path นี้อยู่ใน `addons_path`
+3. รีสตาร์ต Odoo
+4. ไปที่ `Apps`
+5. กด `Update Apps List`
+6. ค้นหา `AutoInfo Sale Order Invoice Amount`
+7. กด `Install`
+
+## เอกสาร
+
+- คู่มือใช้งาน: `docs/user_guide.md`
+- คู่มือเทคนิค: `docs/technical_guide.md`
+- วิธีแก้ปัญหา: `docs/troubleshooting.md`
+- ประวัติการเปลี่ยนแปลง: `docs/timeline_changelog.md`
+
+## Ownership
+
+- Original Owner: ForgeFlow, Odoo Community Association (OCA)
+- Extended By: The Auto-Info Co., Ltd.
+
+## Changelog Summary
+
+- เพิ่มหน้า `Collections`
+- เพิ่มสถานะการเก็บเงิน
+- เพิ่ม `Close Agreement` และ `Reopen Agreement`
+- แก้ปัญหาเรื่อง currency และ view modifier
+- เพิ่มคอลัมน์ในหน้า list และปรับ smart button
+
+## Credits
+
+Development Team: The Auto-Info Co., Ltd. : Dev Team / Mr. Nattanon Vinyangkoon – Project conception, implementation, and thorough review of all deliverables.
+AI Coding Assistant: TRAE SOLO / MICROSOFT 365 COPILOT - Utilized to support code generation and productivity improvements under human oversight.
