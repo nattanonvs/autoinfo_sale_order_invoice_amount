@@ -28,7 +28,7 @@
                     string="Close Agreement"
                     type="object"
                     class="btn-secondary"
-                    groups="sales_team.group_sale_salesman,sales_team.group_sale_manager"
+                    groups="sales_team.group_sale_salesman,sales_team.group_sale_manager,base.group_system"
                     attrs="{'invisible': [('is_closed_agreement', '=', True)]}"
                 />
                 <button
@@ -36,7 +36,7 @@
                     string="Reopen Agreement"
                     type="object"
                     class="btn-secondary"
-                    groups="sales_team.group_sale_manager"
+                    groups="sales_team.group_sale_manager,base.group_system"
                     attrs="{'invisible': [('is_closed_agreement', '=', False)]}"
                 />
             </xpath>
@@ -47,6 +47,38 @@
                         <field name="closed_agreement_reason" readonly="1" />
                         <field name="closed_agreement_date" readonly="1" />
                         <field name="closed_agreement_by" readonly="1" />
+                        <field
+                            name="closed_agreement_cancel_amount"
+                            readonly="1"
+                            widget="monetary"
+                            options="{'currency_field': 'currency_id'}"
+                        />
+                    </group>
+                    <group string="Contract Summary">
+                        <field
+                            name="amount_total"
+                            readonly="1"
+                            widget="monetary"
+                            options="{'currency_field': 'currency_id'}"
+                        />
+                        <field
+                            name="contract_expected_amount"
+                            readonly="1"
+                            widget="monetary"
+                            options="{'currency_field': 'currency_id'}"
+                        />
+                        <field
+                            name="total_paid_amount"
+                            readonly="1"
+                            widget="monetary"
+                            options="{'currency_field': 'currency_id'}"
+                        />
+                        <field
+                            name="contract_uncollected_amount"
+                            readonly="1"
+                            widget="monetary"
+                            options="{'currency_field': 'currency_id'}"
+                        />
                     </group>
                 </group>
             </xpath>
@@ -96,6 +128,39 @@
                             <field name="closed_agreement_date" readonly="1" />
                             <field name="closed_agreement_by" readonly="1" />
                         </group>
+                    </group>
+                    <group string="Contract Summary" col="4">
+                        <field
+                            name="amount_total"
+                            readonly="1"
+                            widget="monetary"
+                            options="{'currency_field': 'currency_id'}"
+                        />
+                        <field
+                            name="contract_expected_amount"
+                            readonly="1"
+                            widget="monetary"
+                            options="{'currency_field': 'currency_id'}"
+                        />
+                        <field
+                            name="total_paid_amount"
+                            readonly="1"
+                            widget="monetary"
+                            options="{'currency_field': 'currency_id'}"
+                        />
+                        <field
+                            name="contract_uncollected_amount"
+                            readonly="1"
+                            widget="monetary"
+                            options="{'currency_field': 'currency_id'}"
+                        />
+                        <field
+                            name="closed_agreement_cancel_amount"
+                            readonly="1"
+                            widget="monetary"
+                            options="{'currency_field': 'currency_id'}"
+                            attrs="{'invisible': [('is_closed_agreement', '=', False)]}"
+                        />
                     </group>
                     <field
                         name="invoice_ids"

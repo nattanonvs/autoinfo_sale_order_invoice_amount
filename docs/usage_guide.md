@@ -35,7 +35,8 @@ You will see:
 1) Open a Sales Order
 2) Click `Close Agreement`
 3) Enter the required reason in the wizard
-4) Click `Confirm`
+4) Enter `Cancelled Amount`
+5) Click `Confirm`
 
 After confirmation, the Sales Order will show:
 
@@ -43,6 +44,15 @@ After confirmation, the Sales Order will show:
 - Close reason
 - Close date/time
 - User who performed the action
+- Cancelled contract amount
+
+The Sales Order form and the `Collections` page will also show:
+
+- Total contract amount
+- Expected contract amount
+- Total paid amount
+- Uncollected contract amount
+- Cancelled contract amount
 
 ### Reopen a closed agreement
 
@@ -51,7 +61,7 @@ After confirmation, the Sales Order will show:
 
 Note:
 
-- This action is available only to `Sales Manager`
+- This action is available to `Sales Manager` and `Settings` (`base.group_system`)
 - Reopen is used when the closed agreement must be reversed and normal collection tracking should resume
 
 ## Intermediate Users
@@ -87,8 +97,9 @@ Note:
 ### Validate Close/Reopen Agreement access
 
 - Confirm the user who closes the agreement belongs to a sales role or has the custom close-agreement permission configured in the system.
-- Confirm the user's department matches the Sales Order department when department-based control is enabled.
-- Confirm only `Sales Manager` users can perform `Reopen Agreement`.
+- Confirm the user's department matches the Sales Order department when department-based control is enabled, unless the user has `Settings` (`base.group_system`).
+- Confirm `Sales Manager` and `Settings` users can perform `Reopen Agreement`.
+- Confirm `Cancelled Amount` is not negative and does not exceed the outstanding amount at close time.
 
 ## Credits
 

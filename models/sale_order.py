@@ -40,6 +40,17 @@ class SaleOrder(models.Model):
     closed_agreement_reason = fields.Text(copy=False, tracking=True)
     closed_agreement_date = fields.Datetime(copy=False, tracking=True)
     closed_agreement_by = fields.Many2one("res.users", copy=False, tracking=True)
+    closed_agreement_cancel_amount = fields.Monetary(copy=False, tracking=True)
+    contract_expected_amount = fields.Monetary(
+        compute="_compute_contract_summary",
+        compute_sudo=False,
+        store=True,
+    )
+    contract_uncollected_amount = fields.Monetary(
+        compute="_compute_contract_summary",
+        compute_sudo=False,
+        store=True,
+    )
     collection_summary_display = fields.Char(
         compute="_compute_collection_metrics",
         compute_sudo=False,
@@ -122,6 +133,21 @@ class SaleOrder(models.Model):
                 order.collection_status = "paid"
             else:
                 order.collection_status = "partial"
+
+    @api.depends(
+        "amount_total",
+        "total_paid_amount",
+        "closed_agreement_cancel_amount",
+    )
+    def _compute_contract_summary(self):
+        for order in self:
+            cancel_amount = max(order.closed_agreement_cancel_amount, 0.0)
+            expected_amount = max(order.amount_total - cancel_amount, 0.0)
+            order.contract_expected_amount = expected_amount
+            order.contract_uncollected_amount = max(
+                expected_amount - order.total_paid_amount,
+                0.0,
+            )
 
     @api.depends(
         "state",
@@ -241,6 +267,8 @@ class SaleOrder(models.Model):
     def _check_close_agreement_access(self):
         self.ensure_one()
         user = self.env.user
+        if user.has_group("base.group_system"):
+            return True
         is_sales_user = user.has_group("sales_team.group_sale_salesman")
         is_sales_manager = user.has_group("sales_team.group_sale_manager")
         in_group_257 = "in_group_257" in user._fields and bool(user.in_group_257)
@@ -256,6 +284,7 @@ class SaleOrder(models.Model):
             raise AccessError(
                 _("You can only close agreements in your own department.")
             )
+        return True
 
     def action_open_collections_page(self):
         self.ensure_one()
@@ -291,7 +320,21 @@ class SaleOrder(models.Model):
 
     def action_reopen_agreement(self):
         self.ensure_one()
-        if not self.env.user.has_group("sales_team.group_sale_manager"):
-            raise AccessError(_("Only Sales Managers can reopen a closed agreement."))
-        self.write({"is_closed_agreement": False})
+        user = self.env.user
+        if not (
+            user.has_group("sales_team.group_sale_manager")
+            or user.has_group("base.group_system")
+        ):
+            raise AccessError(
+                _("Only Sales Managers or Administrators can reopen a closed agreement.")
+            )
+        self.write(
+            {
+                "is_closed_agreement": False,
+                "closed_agreement_reason": False,
+                "closed_agreement_date": False,
+                "closed_agreement_by": False,
+                "closed_agreement_cancel_amount": 0.0,
+            }
+        )
         return True

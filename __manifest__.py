@@ -1,6 +1,6 @@
 {
     "name": "AutoInfo Sale Order Invoice Amount",
-    "version": "15.0.2.0.2",
+    "version": "15.0.2.1.0",
     "author": "ForgeFlow, Odoo Community Association (OCA), The Auto-Info Co., Ltd.",
     "website": "https://github.com/OCA/sale-workflow",
     "category": "Sales",

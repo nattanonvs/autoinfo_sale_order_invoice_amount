@@ -30,3 +30,13 @@
 - Removed collection-status row coloring from the Quotation tree and added the same collection columns to the Sales Order tree.
 - Added `docs/user_guide.md` and `docs/technical_guide.md` in simple Thai based on the final module behavior.
 - Rewrote `docs/troubleshooting.md` in simple Thai and validated install/uninstall on a clean database.
+
+## 2026-06-29
+
+- Bumped module version to `15.0.2.1.0`.
+- Updated `Close Agreement` to require both a reason and a cancelled contract amount.
+- Added `closed_agreement_cancel_amount`, `contract_expected_amount`, and `contract_uncollected_amount`.
+- Added `Contract Summary` on the main Sale Order form and the `Collections` page.
+- Allowed `base.group_system` to close and reopen agreements across departments.
+- Changed `Reopen Agreement` to clear all stored close-agreement data before returning to normal collection tracking.
+- Updated `README.md`, `docs/user_guide.md`, `docs/technical_guide.md`, and `docs/troubleshooting.md` to match the new workflow.

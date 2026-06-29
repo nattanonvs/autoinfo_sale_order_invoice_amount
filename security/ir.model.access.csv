@@ -1,3 +1,4 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_close_agreement_wizard_user,access.close.agreement.wizard.user,model_close_agreement_wizard,sales_team.group_sale_salesman,1,1,1,1
 access_close_agreement_wizard_manager,access.close.agreement.wizard.manager,model_close_agreement_wizard,sales_team.group_sale_manager,1,1,1,1
+access_close_agreement_wizard_admin,access.close.agreement.wizard.admin,model_close_agreement_wizard,base.group_system,1,1,1,1

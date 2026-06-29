@@ -5,6 +5,8 @@
 - Odoo 15
 - Module dependency installed:
   - `sale_order_invoice_amount` (OCA)
+  - `sale_margin`
+  - `account`
 
 ## Installation Steps
 
@@ -26,6 +28,10 @@
 
 - Open Sales → Orders → Quotations
 - Open a quotation and verify the extra invoice amount block is shown under totals.
+- Open a Sales Order and verify the `Collections` smart button is shown.
+- Open the `Collections` page and verify collection metrics render without errors.
+- Test `Close Agreement` with both `reason` and `Cancelled Amount`.
+- Confirm `Reopen Agreement` is available only to `Sales Manager` and `Settings` (`base.group_system`).
 
 ## Credits
 

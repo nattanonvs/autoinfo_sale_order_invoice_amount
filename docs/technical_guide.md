@@ -82,17 +82,47 @@
 - invoice ที่ถูกยกเลิกจะไม่ถูกนำมาคิด
 - ถ้า currency ของเอกสารยังไม่พร้อม ระบบจะใช้ fallback currency ที่ปลอดภัย
 - tree ย่อยของ invoice มี field `state` แบบซ่อน เพื่อให้ modifier ของ Odoo ทำงานถูกต้อง
-- `Close Agreement` จะตรวจสิทธิ์ผู้ใช้ก่อนทุกครั้ง
-- `Reopen Agreement` ใช้ได้เฉพาะ `Sales Manager`
+- `Close Agreement` จะตรวจสิทธิ์ผู้ใช้ก่อนทุกครั้ง และ `base.group_system` สามารถข้ามข้อจำกัดแผนกได้
+- `Reopen Agreement` ใช้ได้สำหรับ `Sales Manager` และ `base.group_system`
+
+## ฟิลด์และตรรกะใหม่
+
+- ฟิลด์ใหม่บน `sale.order`
+  - `closed_agreement_cancel_amount`
+  - `contract_expected_amount`
+  - `contract_uncollected_amount`
+- ฟิลด์ใหม่บน wizard `close.agreement.wizard`
+  - `currency_id`
+  - `cancel_amount`
+  - `cancel_amount_provided`
+- `contract_expected_amount` คำนวณจาก `amount_total - closed_agreement_cancel_amount`
+- `contract_uncollected_amount` คำนวณจาก `contract_expected_amount - total_paid_amount`
+- เมื่อ `Reopen Agreement` ระบบจะล้าง `is_closed_agreement`, เหตุผล, วันเวลา, ผู้ปิด และ `closed_agreement_cancel_amount`
+
+## Validation ใหม่ของ Close Agreement
+
+- ต้องกรอก `reason`
+- ต้องมีการส่งค่า `cancel_amount` เข้ามาจริง
+- `cancel_amount` ต้องไม่ติดลบ
+- `cancel_amount` ต้องไม่มากกว่ายอดค้าง ณ เวลาที่กดปิด (`amount_total - total_paid_amount`)
+- ฝั่ง wizard จะเรียก `_check_close_agreement_access()` ก่อนบันทึกข้อมูลเสมอ
+
+## การอัปเดต View ที่เกี่ยวข้อง
+
+- ฟอร์ม wizard เพิ่มช่อง `Cancelled Amount`
+- ส่วนหัวของ Sale Order เพิ่มสิทธิ์ให้ `base.group_system` เห็นปุ่ม `Close Agreement` และ `Reopen Agreement`
+- หน้า Sale Order และหน้า `Collections` แสดง `Contract Summary`
+- หน้า `Collections` แสดง `closed_agreement_cancel_amount` เมื่อเอกสารถูกปิดสัญญาแล้ว
 
 ## การทดสอบที่ควรทำหลังติดตั้ง
 
 1. เปิดหน้า `Quotation`
 2. เปิดหน้า `Sales Order`
 3. เปิดหน้า `Collections`
-4. ลองกด `Close Agreement`
-5. ลองกด `Reopen Agreement` ด้วย `Sales Manager`
-6. ดูคอลัมน์ในหน้า list
+4. ลองกด `Close Agreement` พร้อมกรอกเหตุผลและยอดยกเลิก
+5. ทดสอบกรณียอดยกเลิกมากกว่ายอดค้างเพื่อยืนยัน validation
+6. ลองกด `Reopen Agreement` ด้วย `Sales Manager` หรือ `Settings`
+7. ดูคอลัมน์ในหน้า list และตรวจสรุปสัญญาบนหน้า `Collections`
 
 ## ถ้าจะย้ายขึ้น Git
 

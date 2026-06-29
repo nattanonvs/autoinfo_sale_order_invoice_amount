@@ -11,6 +11,11 @@
                         name="reason"
                         placeholder="Enter the required closure reason..."
                     />
+                    <field
+                        name="cancel_amount"
+                        widget="monetary"
+                        options="{'currency_field': 'currency_id'}"
+                    />
                 </group>
                 <footer>
                     <button

@@ -20,8 +20,10 @@
 - เพิ่ม Smart Button `Collections` บน Sale Order เพื่อเปิดหน้าสรุปการเก็บเงินและรายการ Invoice ที่เกี่ยวข้อง
 - เพิ่ม `Collection Status` สำหรับติดตามสถานะ `Partial Collection`, `Fully Collected`, และ `Closed Agreement`
 - แสดง `Collection Status` ได้ทั้งบนหน้า Form, Tree view และ Search filters
-- รองรับ workflow `Close Agreement` โดยบังคับกรอกเหตุผลก่อนยืนยัน และบันทึกข้อมูล audit trail
-- รองรับ `Reopen Agreement` โดยจำกัดสิทธิ์ไว้สำหรับ `Sales Manager`
+- รองรับ workflow `Close Agreement` แบบใหม่ โดยต้องกรอกทั้งเหตุผลและยอดตามสัญญาที่ต้องการยกเลิกก่อนยืนยัน
+- แสดงสรุปสัญญาบนหน้า Sale Order และหน้า `Collections` ครบ 5 ค่า: ยอดเต็มของสัญญา, ยอดที่ต้องได้รับ, ยอดที่เก็บแล้ว, ยอดที่ยังไม่ได้เก็บ, และยอดที่ยกเลิก
+- รองรับ `Reopen Agreement` โดยให้ `Sales Manager` และ `Settings` (`base.group_system`) เปิดกลับได้ และล้างข้อมูลการปิดสัญญาเดิมออกทั้งหมด
+- ผู้ใช้ `Settings` (`base.group_system`) สามารถ `Close Agreement` และ `Reopen Agreement` ได้ข้ามแผนก
 - แยกติดตั้ง/ถอนการติดตั้งได้ โดยไม่กระทบโมดูลหลักของ Odoo (มีผลเฉพาะการเพิ่ม field และ view ของโมดูลนี้)
 
 ## Dependency
@@ -57,6 +59,9 @@
 - เพิ่มหน้า `Collections`
 - เพิ่มสถานะการเก็บเงิน
 - เพิ่ม `Close Agreement` และ `Reopen Agreement`
+- เพิ่มการบังคับกรอก `Cancelled Amount` ใน `Close Agreement`
+- เพิ่ม `Contract Summary` สำหรับติดตามยอดเต็ม, ยอดคาดรับ, ยอดเก็บแล้ว, ยอดค้าง และยอดยกเลิก
+- เพิ่มสิทธิ์ `Settings` (`base.group_system`) ให้ปิด/เปิดสัญญาได้ข้ามแผนก
 - แก้ปัญหาเรื่อง currency และ view modifier
 - เพิ่มคอลัมน์ในหน้า list และปรับ smart button
 
