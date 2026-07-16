@@ -5,10 +5,11 @@
 ทำตามนี้ทีละข้อ
 
 1. ตรวจว่า path `/var/odoo/custom15_autoinfo` อยู่ใน `addons_path`
-2. รีสตาร์ต Odoo
-3. ไปที่ `Apps`
-4. กด `Update Apps List`
-5. ค้นหาโมดูลใหม่อีกครั้ง
+2. ตรวจว่าโฟลเดอร์โมดูลอยู่ที่ `/var/odoo/custom15_autoinfo/autoinfo_sale_order_invoice_amount`
+3. รีสตาร์ต Odoo
+4. ไปที่ `Apps`
+5. กด `Update Apps List`
+6. ค้นหาโมดูลใหม่อีกครั้ง
 
 ## 2. กดเข้าโมดูลแล้ว view พัง
 

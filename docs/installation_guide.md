@@ -12,8 +12,10 @@
 
 1) Copy module folder
 
-- Place `autoinfo_sale_order_invoice_amount/` under an Odoo addons path.
-- On a typical Linux server, the standard path is `/var/odoo/custom15_autoinfo` (ensure it is included in `addons_path`).
+- Place `autoinfo_sale_order_invoice_amount/` at this Linux path:
+  `/var/odoo/custom15_autoinfo/autoinfo_sale_order_invoice_amount`
+- Ensure this addons root is included in `addons_path`:
+  `/var/odoo/custom15_autoinfo`
 
 2) Update Apps List
 

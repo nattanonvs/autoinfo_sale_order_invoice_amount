@@ -2,6 +2,11 @@
 
 ## Upgrade via UI
 
+- Linux module path used by this guide:
+  `/var/odoo/custom15_autoinfo/autoinfo_sale_order_invoice_amount`
+- Odoo addons root that must exist in `addons_path`:
+  `/var/odoo/custom15_autoinfo`
+
 1) Odoo → Apps
 2) Search “AutoInfo Sale Order Invoice Amount”
 3) Click Upgrade

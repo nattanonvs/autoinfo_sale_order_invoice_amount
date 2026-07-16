@@ -17,7 +17,8 @@
 
 1. วางโฟลเดอร์โมดูลไว้ที่
    `/var/odoo/custom15_autoinfo/autoinfo_sale_order_invoice_amount`
-2. ตรวจว่า path นี้อยู่ใน `addons_path`
+2. ตรวจว่า path หลักนี้อยู่ใน `addons_path`
+   `/var/odoo/custom15_autoinfo`
 3. รีสตาร์ต Odoo
 4. ไปที่ `Apps`
 5. กด `Update Apps List`

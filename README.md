@@ -42,6 +42,10 @@
 6. ค้นหา `AutoInfo Sale Order Invoice Amount`
 7. กด `Install`
 
+path หลักที่ใช้ในเอกสารชุดนี้คือ:
+
+`/var/odoo/custom15_autoinfo`
+
 ## เอกสาร
 
 - คู่มือใช้งาน: `docs/user_guide.md`

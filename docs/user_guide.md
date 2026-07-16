@@ -22,6 +22,8 @@
 3. ต้องติดตั้งโมดูล `sale_margin`
 4. ถ้าจะดูยอดรับชำระ ต้องมี invoice และมีการรับเงินแล้ว
 5. ถ้าจะใช้ `Close Agreement` ผู้ใช้ต้องมีสิทธิ์ในงานขาย
+6. ถ้าติดตั้งบน Linux ให้เก็บโมดูลไว้ที่ `/var/odoo/custom15_autoinfo/autoinfo_sale_order_invoice_amount`
+7. และต้องมี path `/var/odoo/custom15_autoinfo` อยู่ใน `addons_path`
 
 ## 4. วิธีใช้งานทีละขั้น
 

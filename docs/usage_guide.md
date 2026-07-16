@@ -1,5 +1,12 @@
 # Usage Guide
 
+## Module Path
+
+- Linux module path:
+  `/var/odoo/custom15_autoinfo/autoinfo_sale_order_invoice_amount`
+- Odoo addons root:
+  `/var/odoo/custom15_autoinfo`
+
 ## End Users (Basic)
 
 ### View invoice progress on a Sales Order

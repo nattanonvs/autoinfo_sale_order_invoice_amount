@@ -2,9 +2,13 @@
 
 ## 1) เตรียมไฟล์โมดูล
 
-คัดลอกโฟลเดอร์ `autoinfo_sale_order_invoice_amount/` ไปไว้ใน addons path ของ Odoo
+คัดลอกโฟลเดอร์ `autoinfo_sale_order_invoice_amount/` ไปไว้ที่ path นี้บน Linux server:
 
-หมายเหตุ: บน Linux server โดยทั่วไปนิยมใช้ path `/var/odoo/custom15_autoinfo` และต้องอยู่ใน `addons_path` ของไฟล์ config
+`/var/odoo/custom15_autoinfo/autoinfo_sale_order_invoice_amount`
+
+และต้องตรวจว่า path หลักนี้ถูกใส่ไว้ใน `addons_path` ของ Odoo แล้ว:
+
+`/var/odoo/custom15_autoinfo`
 
 ## 2) อัปเดตรายการแอป (Update Apps List)
 
